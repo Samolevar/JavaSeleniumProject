@@ -1,4 +1,4 @@
-package com.seleniumtest;
+package tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +23,7 @@ public class PageObjects {
 
     public void ChooseRadioButton(String tag, Integer elem) {
         WebElement radio = this.driver.findElements(By.name(tag)).get(elem);
+	
         Actions actions = new Actions(driver);
 
         actions.moveToElement(radio).click().perform();

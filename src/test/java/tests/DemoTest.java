@@ -1,33 +1,29 @@
-package com.seleniumtest;
+package tests;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import environment.EnvironmentManager;
+import environment.RunEnvironment;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-public class SeleniumTest {
-    static PageObjects page;
-    static ChromeOptions options;
+public class DemoTest {
+    static PageObjects page;	
     static WebDriver driver;
 
-    @BeforeAll
-    static void SetUp() {
-        WebDriverManager.chromedriver().setup();
-
-        options = new ChromeOptions();
-        driver = new ChromeDriver(options);
+    @BeforeEach
+    public void startBrowser() {
+        EnvironmentManager.initWebDriver();
+	driver = RunEnvironment.getWebDriver();
         page = new PageObjects(driver);
 
         driver.get("https://www.tutorialspoint.com/selenium/selenium_automation_practice.htm");
     }
 
     @Test
-    public void ExecuteScenario() {
-        // Fill text boxes
+    public void demo() {
+         // Fill text boxes
         page.FillTextBox("firstname", "Test");
         page.FillTextBox("lastname", "Last");
 
@@ -54,8 +50,8 @@ public class SeleniumTest {
         driver.switchTo().alert().accept();
     }
 
-    @AfterAll
-    static void TearDown() {
-        driver.quit();
+    @AfterEach
+    public void tearDown() {
+        EnvironmentManager.shutDownDriver();
     }
 }
